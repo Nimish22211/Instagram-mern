@@ -1,0 +1,42 @@
+header {
+    height: 70px;
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    justify-content: space-evenly;
+}
+
+.header_form {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    background-color: #eee;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.header_form>input {
+    border: none;
+    background-color: #eee;
+    font-size: 18px;
+    margin-top: 2px;
+    margin-left: 5px;
+}
+
+.header_form>input:focus {
+    outline: none;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+nav>.icon {
+    cursor: pointer;
+    font-size: 30px;
+    /* color: #777; */
+}
