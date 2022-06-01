@@ -11,19 +11,23 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 function Header() {
     return (
         <header>
-            <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="insta logo" />
-            <form className="header_form">
-                <SearchIcon />
-                <input type="text" placeholder="Search" />
-            </form>
-            <nav>
-                <HomeIcon className="icon" />
-                <MessageOutlinedIcon className="icon" />
-                <AddBoxOutlinedIcon className="icon" />
-                <ExploreOutlinedIcon className="icon" />
-                <FavoriteBorderOutlinedIcon className="icon" />
-                <AccountCircleOutlinedIcon className="icon" />
-            </nav>
+            <div className="header_container">
+                <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="insta logo" />
+                <form className="header_form">
+                    <i>
+                        <SearchIcon />
+                    </i>
+                    <input type="text" placeholder="Search" />
+                </form>
+                <nav>
+                    <HomeIcon className="icon" />
+                    <MessageOutlinedIcon className="icon" />
+                    <AddBoxOutlinedIcon className="icon" />
+                    <ExploreOutlinedIcon className="icon" />
+                    <FavoriteBorderOutlinedIcon className="icon" />
+                    <AccountCircleOutlinedIcon className="icon" />
+                </nav>
+            </div>
         </header>
     )
 }

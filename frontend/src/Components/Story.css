@@ -1,0 +1,31 @@
+.section_story {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border: 1px solid #bbb;
+    margin: 16px;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 470px;
+    overflow-y: hidden;
+    gap: 3px
+}
+
+.section_story>figure {
+    cursor: pointer;
+}
+
+.section_story>figure>img {
+    border-radius: 100%;
+    height: 56px;
+    width: 56px;
+}
+
+.section_story>figure>figcaption {
+    text-overflow: ellipsis;
+    width: 75px;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 14px;
+    color: #333
+}
