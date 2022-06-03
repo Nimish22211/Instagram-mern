@@ -1,3 +1,6 @@
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/auth'
+
 const firebaseConfig = {
     apiKey: "AIzaSyDRTKPgk1LETX1fhS12x6bvdqXe0wAiS-A",
     authDomain: "myinstagram-app-clone.firebaseapp.com",
@@ -7,3 +10,8 @@ const firebaseConfig = {
     appId: "1:571482513257:web:db6b6dee6df3136d3127f8",
     measurementId: "G-GBLY0H0Y44"
 };
+
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+export { auth, app }
