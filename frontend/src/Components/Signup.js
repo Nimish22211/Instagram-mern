@@ -4,6 +4,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase'
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, selectAuthUser } from '../Redux/AuthUser'
+import { useNavigate } from 'react-router-dom'
 
 function Signup() {
 
@@ -12,36 +13,68 @@ function Signup() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [userName, setUserName] = useState('')
-    const [loggedUser, setLoggedUser] = useState(null);
     const dispatch = useDispatch();
     const currUser = useSelector(selectAuthUser);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, user => {
             if (user) {
-                console.log(user);
-                setLoggedUser(user)
-                dispatch(setUser({ email: user.email, userName: user.displayName }))
+                navigate('/')
             } else {
                 setUser(null)
             }
         })
-        return () => unsubscribe()
+        return unsubscribe
+        //! this is a comment to disbale the error for dependencies
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
         console.log(currUser);
 
     }, [currUser])
+
     const handleSignUp = (e) => {
         e.preventDefault();
-        auth.createUserWithEmailAndPassword(email, password)
-            .then((user) => {
-                return user.user.updateProfile({
-                    displayName: userName,
+        if (userName === "" || fullName === "") {
+            alert('fill all fields')
+        } else {
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((user) => {
+                    return user.user.updateProfile({
+                        displayName: userName
+                    })
+                }).then(() => {
+
+                    fetch('http://localhost:4444/signup', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: email,
+                            userName: userName,
+                            fullName
+                        })
+                    }).then(res => res.json()).then(data => {
+                        dispatch(setUser({ email: data.email, userName: data.userName, fullName: data.fullName }))
+                    })
                 })
-            })
-            .catch(err => alert(err.message))
+                .catch(err => alert(err.message))
+        }
+
+    }
+    const handleChange = (elem, e) => {
+        if (elem === 'fullName') {
+            setFullName(e.target.value)
+        } else if (elem === 'email') {
+            setEmail(e.target.value)
+        } else if (elem === 'password') {
+            setPassword(e.target.value)
+        } else if (elem === 'userName') {
+            setUserName(e.target.value)
+        }
     }
 
     return (
@@ -52,10 +85,10 @@ function Signup() {
 
                 <h3>Sign up to see photos and videos from your friends. </h3>
                 <form className="signup_form">
-                    <input onChange={(e) => setFullName(e.target.value)} value={fullName} type="text" placeholder="Full Name" />
-                    <input onChange={(e) => setUserName(e.target.value)} value={userName} type="text" placeholder="Username" />
-                    <input onChange={(e) => setEmail(e.target.value)} value={email} type="email" placeholder="Email" />
-                    <input onChange={(e) => setPassword(e.target.value)} value={password} type="password" placeholder="Password" />
+                    <input onChange={(e) => handleChange('fullName', e)} value={fullName} type="text" placeholder="Full Name" />
+                    <input onChange={(e) => handleChange('userName', e)} value={userName} type="text" placeholder="Username" />
+                    <input onChange={(e) => handleChange('email', e)} value={email} type="email" placeholder="Email" />
+                    <input onChange={(e) => handleChange('password', e)} value={password} type="password" placeholder="Password" />
 
                     <button type="submit" className="signup_button" onClick={handleSignUp}>Sign Up</button>
                 </form>

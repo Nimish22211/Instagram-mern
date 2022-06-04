@@ -1,0 +1,16 @@
+const followArr = [{
+    userName: String,
+    fullName: String,
+    uid: mongoose.Schema.Types.ObjectId
+}]
+
+const postArr = [{
+    postId: mongoose.Schema.Types.ObjectId,
+    caption: String,
+    likes: Number,
+    comments: [{
+        commentId: mongoose.Schema.Types.ObjectId,
+        comment: String,
+        userName: String
+    }]
+}]
