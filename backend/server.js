@@ -48,6 +48,16 @@ app.post('/signup', (req, res) => {
     createUser(userName, fullName, email).then(data => res.send(data))
 })
 
+app.get('/login/:email', (req, res) => {
+    const { email } = req.params;
+    getUser(email).then(data => res.send(data))
+})
+
+const getUser = async (email) => {
+    const user = await users.findOne({ email })
+    return user
+}
+
 app.get('/', (req, res) => {
     res.send('Hello World!');
 })

@@ -1,0 +1,55 @@
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.profile_header {
+    display: flex;
+}
+
+.profile_info {
+    margin-left: 50px;
+    margin-top: 10px;
+}
+
+.info_head {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.edit_profile {
+    background-color: #fff;
+    border: 1px solid #bbb;
+    outline: none;
+    padding: 8px;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.data_numbers {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px
+}
+
+.profile_picture {
+    width: 156px;
+    height: 156px;
+}
+
+.profile_username {
+    font-size: 28px;
+    font-weight: 200;
+}
+
+.fullName {
+    margin-top: 25px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}

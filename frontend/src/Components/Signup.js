@@ -4,7 +4,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase'
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, selectAuthUser } from '../Redux/AuthUser'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Signup() {
 
@@ -94,7 +94,7 @@ function Signup() {
                 </form>
             </div>
             <div className="login_section">
-                Have an account? Log in
+                Have an account? <Link to="/login">Log in</Link>
             </div>
         </div>
     )

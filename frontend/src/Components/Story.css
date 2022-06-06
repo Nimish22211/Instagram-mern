@@ -8,7 +8,9 @@
     border-radius: 10px;
     max-width: 470px;
     overflow-y: hidden;
-    gap: 3px
+    gap: 3px;
+    background-color: #fff;
+    width: 100%;
 }
 
 .section_story>figure {
@@ -28,4 +30,20 @@
     overflow: hidden;
     font-size: 14px;
     color: #333
+}
+
+.add_icon_circle {
+    border: 2px dashed #bbb;
+    /* padding: 5px; */
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.follow_for_story {
+    margin-left: 20px;
 }

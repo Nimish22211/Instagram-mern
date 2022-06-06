@@ -49,3 +49,7 @@
     border-radius: 4px;
     cursor: pointer;
 }
+
+.signup_section a {
+    text-decoration: none;
+}
