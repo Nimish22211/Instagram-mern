@@ -58,7 +58,20 @@ function Signup() {
                             fullName
                         })
                     }).then(res => res.json()).then(data => {
-                        dispatch(setUser({ email: data.email, userName: data.userName, fullName: data.fullName }))
+                        let followers = data.followers
+                        let following = data.following
+                        let posts = data.posts
+                        let bio = data.bio
+                        if (data.followers === undefined) {
+                            data.followers = []
+                        } else if (data.following === undefined) {
+                            data.following = []
+                        } else if (data.posts === undefined) {
+                            data.posts = []
+                        } else if (data.bio === undefined) {
+                            data.bio = ''
+                        }
+                        dispatch(setUser({ email: data.email, userName: data.userName, fullName: data.fullName, followers: followers, following: following, posts: posts, bio: bio }))
                     })
                 })
                 .catch(err => alert(err.message))

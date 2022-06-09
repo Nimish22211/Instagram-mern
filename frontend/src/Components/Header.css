@@ -57,10 +57,15 @@ nav {
     gap: 20px;
 }
 
-nav>div>.icon {
+nav div>.icon {
     cursor: pointer;
-    font-size: 28px;
+    font-size: 28px !important;
     /* color: #777; */
+}
+
+nav a {
+    text-decoration: none;
+    color: black;
 }
 
 .profile_container {

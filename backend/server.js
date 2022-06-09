@@ -58,6 +58,37 @@ const getUser = async (email) => {
     return user
 }
 
+app.get('/getuser/:username', (req, res) => {
+    const { username } = req.params;
+    getUserByUsername(username).then(data => res.send(data))
+})
+
+const getUserByUsername = async (username) => {
+    const user = await users.findOne({ userName: username })
+    console.log(user)
+    let error = { 'error': 'user not found' }
+    if (user) {
+        return user
+    } else {
+        return error
+    }
+}
+
+app.post('/follow', (req, res) => {
+    const { userName, userToFollow } = req.body;
+    followUser(userName, userToFollow).then(data => res.send(data))
+})
+
+const followUser = async (username, followThisUser) => {
+    const user = await users.findOne({ userName: username })
+    const userToFollow = await users.findOne({ userName: followThisUser })
+    userToFollow.followers.push({ userName: username })
+    user.following.push({ userName: followThisUser })
+    userToFollow.save()
+    user.save()
+    return user
+}
+
 app.get('/', (req, res) => {
     res.send('Hello World!');
 })

@@ -8,10 +8,14 @@
 
 .profile_header {
     display: flex;
+    width: 900px;
+    /* margin-bottom: 50px; */
+    padding-bottom: 50px;
+    border-bottom: 1px solid #bbb;
 }
 
 .profile_info {
-    margin-left: 50px;
+    margin-left: 100px;
     margin-top: 10px;
 }
 
@@ -29,6 +33,7 @@
     border-radius: 5px;
     font-weight: 700;
     font-size: 15px;
+    cursor: pointer;
 }
 
 .data_numbers {
@@ -37,9 +42,10 @@
     gap: 20px
 }
 
-.profile_picture {
+#profile_picture {
     width: 156px;
     height: 156px;
+    font-size: 80px;
 }
 
 .profile_username {
@@ -52,4 +58,42 @@
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 20px;
+}
+
+.profile_posts {
+    padding-top: 15px;
+}
+
+.profile_posts_header {
+    display: flex;
+    /* align-items: center; */
+    gap: 70px;
+    background-color: yellow;
+}
+
+.followBtn {
+    margin-left: 50px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    background-color: rgb(66, 133, 244);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.followBtn:hover {
+    background-color: rgb(115, 169, 255);
+}
+
+.modal_title {
+    text-align: center;
+    padding: 5px;
+    border-bottom: 0.5px solid rgb(126, 126, 126);
+}
+
+.modal_list {
+    padding: 8px 15px;
+    display: flex;
 }

@@ -39,7 +39,20 @@ function Login() {
                 // console.log(user.user._delegate)
                 fetch('http://localhost:4444/login/' + email).then(res => res.json()).then(data => {
                     // console.log(data)
-                    dispatch(setUser({ email: data.email, userName: data.userName, fullName: data.fullName }))
+                    let followers = data.followers
+                    let following = data.following
+                    let posts = data.posts
+                    let bio = data.bio
+                    if (data.followers === undefined) {
+                        data.followers = []
+                    } else if (data.following === undefined) {
+                        data.following = []
+                    } else if (data.posts === undefined) {
+                        data.posts = []
+                    } else if (data.bio === undefined) {
+                        data.bio = ''
+                    }
+                    dispatch(setUser({ email: data.email, userName: data.userName, fullName: data.fullName, followers: followers, following: following, posts: posts, bio: bio }))
                 })
                 // dispatch(setUser({email:data.user._delegate.email, userName:data.user._delegate.displayName, fullName:}))
             )

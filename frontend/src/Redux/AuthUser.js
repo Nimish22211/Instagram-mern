@@ -3,7 +3,11 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     email: '',
     userName: '',
-    fullName: ''
+    fullName: '',
+    followers: [],
+    following: [],
+    posts: [],
+    bio: ''
 }
 
 const AuthUserSlice = createSlice({
@@ -14,6 +18,10 @@ const AuthUserSlice = createSlice({
             state.email = action.payload.email;
             state.fullName = action.payload.fullName;
             state.userName = action.payload.userName;
+            state.followers = action.payload.followers;
+            state.following = action.payload.following;
+            state.posts = action.payload.posts;
+            state.bio = action.payload.bio;
         }
     }
 });

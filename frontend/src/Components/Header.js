@@ -14,8 +14,8 @@ import { signOut, onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../firebase'
 import { Link, useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
-import { useSelector } from 'react-redux';
-import { selectAuthUser } from '../Redux/AuthUser'
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser, selectAuthUser } from '../Redux/AuthUser'
 
 
 function Header() {
@@ -26,13 +26,32 @@ function Header() {
     const [profileActive, setProfileActive] = useState(false);
     const currUser = useSelector(selectAuthUser)
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, user => {
             if (!user) {
                 navigate('/login')
             } else {
-                // setUser(null)
+                dispatch(setUser({ email: user.email, userName: user.displayName, fullName: '', followers: '', following: '', posts: '', bio: '' }))
+                fetch('http://localhost:4444/login/' + user.email)
+                    .then(res => res.json())
+                    .then(data => {
+                        let followers = data.followers
+                        let following = data.following
+                        let posts = data.posts
+                        let bio = data.bio
+                        if (data.followers === undefined) {
+                            data.followers = []
+                        } else if (data.following === undefined) {
+                            data.following = []
+                        } else if (data.posts === undefined) {
+                            data.posts = []
+                        } else if (data.bio === undefined) {
+                            data.bio = ''
+                        }
+                        dispatch(setUser({ email: data.email, userName: data.userName, fullName: data.fullName, followers: followers, following: following, posts: posts, bio: bio }))
+                    })
             }
         })
         return unsubscribe
@@ -63,7 +82,9 @@ function Header() {
     return (
         <header>
             <div className="header_container">
-                <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="insta logo" />
+                <Link to="/">
+                    <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="insta logo" />
+                </Link>
                 <form className="header_form">
                     <i>
                         <SearchIcon />
@@ -71,9 +92,11 @@ function Header() {
                     <input type="text" placeholder="Search" />
                 </form>
                 <nav>
-                    <div>
-                        <HomeIcon className="icon" />
-                    </div>
+                    <Link to="/">
+                        <div>
+                            <HomeIcon className="icon" />
+                        </div>
+                    </Link>
                     <div>
                         <MessageOutlinedIcon className="icon" />
                     </div>
@@ -91,7 +114,7 @@ function Header() {
                         {profileActive && (
                             <div className="profile_dropdown" id="profile_box">
                                 <div>
-                                    <Link to={currUser.userName !== "" ? '/' + currUser.userName : '/'}>
+                                    <Link to={currUser.userName !== "" ? '/' + currUser.userName + '/posts' : '/'}>
                                         <div className="d-flex">
                                             <AccountCircleOutlinedIcon />
                                             <span> Profile</span>
