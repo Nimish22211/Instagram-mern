@@ -71,7 +71,8 @@
     background-color: yellow;
 }
 
-.followBtn {
+.followBtn,
+.followingBtn {
     margin-left: 50px;
     padding: 10px 20px;
     font-size: 16px;
@@ -81,6 +82,16 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.followingBtn {
+    background-color: #fff;
+    border: 1px solid #aaa;
+    color: black
+}
+
+.followingBtn:hover {
+    background-color: #eee;
 }
 
 .followBtn:hover {
@@ -96,4 +107,6 @@
 .modal_list {
     padding: 8px 15px;
     display: flex;
+    flex-direction: column;
+    gap: 5px
 }

@@ -89,6 +89,21 @@ const followUser = async (username, followThisUser) => {
     return user
 }
 
+app.patch('/unfollow', (req, res) => {
+    const { userName, userToUnFollow } = req.body;
+    unFollowUser(userName, userToUnFollow).then(data => res.send(data))
+})
+
+const unFollowUser = async (username, unFollowThisUser) => {
+    const user = await users.findOne({ userName: username })
+    const userToUnFollow = await users.findOne({ userName: unFollowThisUser })
+    userToUnFollow.followers = await userToUnFollow.followers.filter(follower => follower.userName !== username)
+    user.following = await user.following.filter(following => following.userName !== unFollowThisUser)
+    userToUnFollow.save()
+    user.save()
+    return user
+}
+
 app.get('/', (req, res) => {
     res.send('Hello World!');
 })

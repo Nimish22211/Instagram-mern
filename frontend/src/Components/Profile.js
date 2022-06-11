@@ -93,6 +93,24 @@ function Profile() {
             // }
         })
     }
+
+    const unFollow = () => {
+        fetch('http://localhost:4444/unfollow', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                userName: currUser.userName,
+                userToUnFollow: profile.userName
+            })
+        }).then(res => res.json()).then(data => {
+            console.log(data)
+            dispatch(setUser({ userName: data.userName, email: data.email, fullName: data.fullName, bio: data.bio, posts: data.posts, followers: data.followers, following: data.following }))
+        })
+        console.log('unfollow')
+    }
     return (
         <div className="profile">
             {profile !== null ? (
@@ -110,7 +128,7 @@ function Profile() {
                                     </>
                                 ) : showFollowBtn == null ? (
                                     <div></div>
-                                ) : <button className="followBtn" onClick={follow}>{userFollowing === true ? 'Following' : userFollowing === false ? 'Follow' : ''}</button>}
+                                ) : <button className={userFollowing === false ? 'followBtn' : 'followingBtn'} onClick={userFollowing === false ? follow : unFollow}>{userFollowing === true ? 'Following' : userFollowing === false ? 'Follow' : ''}</button>}
 
                             </div>
                             <div className="data_numbers">
@@ -132,8 +150,9 @@ function Profile() {
                                         <div className="modal_list">
                                             {profile?.followers?.map((follower) => {
                                                 return (
-                                                    <div key={follower._id}>
-                                                        {follower.userName}
+                                                    <div key={follower._id} >
+                                                        <h3>{follower.userName}</h3>
+                                                        {/* <p>{follower.fullName}</p> */}
                                                     </div>
                                                 )
                                             })}
@@ -158,7 +177,8 @@ function Profile() {
                                             {profile?.following?.map((following) => {
                                                 return (
                                                     <div key={following._id}>
-                                                        {following.userName}
+                                                        <h3>{following.userName}</h3>
+                                                        {/* <p>{following.fullName}</p> */}
                                                     </div>
                                                 )
                                             })}
