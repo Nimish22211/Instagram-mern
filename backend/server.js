@@ -55,6 +55,7 @@ app.get('/login/:email', (req, res) => {
 
 const getUser = async (email) => {
     const user = await users.findOne({ email })
+    console.log(user)
     return user
 }
 
