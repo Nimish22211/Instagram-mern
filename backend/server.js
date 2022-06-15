@@ -105,6 +105,22 @@ const unFollowUser = async (username, unFollowThisUser) => {
     return user
 }
 
+app.get('/getusers/search', (req, res) => {
+    const { q } = req.query;
+    getUsers(q).then(data => res.send(data))
+})
+
+const getUsers = async (query) => {
+    const userData = await users.find({ userName: { $regex: query, $options: 'i' } })
+    let res = userData.map(item => {
+        return {
+            userName: item.userName,
+            fullName: item.fullName
+        }
+    })
+    return res
+}
+
 app.get('/', (req, res) => {
     res.send('Hello World!');
 })

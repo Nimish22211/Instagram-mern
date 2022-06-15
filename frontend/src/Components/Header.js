@@ -12,11 +12,23 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import LoopOutlinedIcon from '@mui/icons-material/LoopOutlined';
 import { signOut, onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../firebase'
-import { Link, useNavigate } from 'react-router-dom';
-import Avatar from '@mui/material/Avatar';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Avatar, Modal } from '@mui/material/';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser, selectAuthUser } from '../Redux/AuthUser'
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    backgroundColor: '#fff',
+    // border: '2px solid #000',
+    outline: 'none',
+    boxShadow: 24,
+    borderRadius: 6,
+};
 
 function Header() {
     const [homeActive, setHomeActive] = useState(true);
@@ -27,6 +39,16 @@ function Header() {
     const currUser = useSelector(selectAuthUser)
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [input, setInput] = useState('');
+    const [searchModal, setSearchModal] = useState(false);
+    const [postModal, setPostModal] = useState(false);
+    const [searchResults, setSearchResults] = useState([]);
+    const params = useParams();
+
+    useEffect(() => {
+        setSearchModal(false)
+        setInput('')
+    }, [params.username])
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, user => {
@@ -60,6 +82,7 @@ function Header() {
     }, [])
 
     useEffect(() => {
+
         var ignoreClickOnMeElement = document.getElementById('profile_icon');
 
         const closeProfile = document.addEventListener('click', function (event) {
@@ -79,6 +102,18 @@ function Header() {
         signOut(auth)
     }
 
+    const handleSearch = (e) => {
+        e.preventDefault();
+        fetch('http://localhost:4444/getusers/search?q=' + input)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                setSearchResults(data)
+            })
+        setSearchModal(true)
+        console.log(input)
+    }
+
     return (
         <header>
             <div className="header_container">
@@ -89,8 +124,32 @@ function Header() {
                     <i>
                         <SearchIcon />
                     </i>
-                    <input type="text" placeholder="Search" />
+                    <input type="text" placeholder="Search" value={input} onChange={(e) => setInput(e.target.value)} />
+                    <button type="submit" style={{ display: 'none' }} onClick={handleSearch}></button>
                 </form>
+                <Modal
+                    open={searchModal}
+                    onClose={() => setSearchModal(false)}
+                >
+                    <div style={style}>
+                        <div className="modal_title">
+                            <h3>Search Results</h3>
+                        </div>
+                        <div className="modal_list">
+                            {searchResults.map((user, index) => (
+                                <Link to={`/${user.userName}/posts`} key={index}>
+
+                                    <div>
+                                        <h3>{user.userName}</h3>
+                                        <p>{user.fullName}</p>
+                                    </div>
+
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+
+                </Modal>
                 <nav>
                     <Link to="/">
                         <div>
@@ -101,7 +160,17 @@ function Header() {
                         <MessageOutlinedIcon className="icon" />
                     </div>
                     <div>
-                        <AddBoxOutlinedIcon className="icon" />
+                        <AddBoxOutlinedIcon className="icon" onClick={() => setPostModal(true)} />
+                        <Modal
+                            open={postModal}
+                            onClose={() => setPostModal(false)}
+                        >
+                            <div style={style}>
+                                <div className="modal_title">
+                                    <h3>Create New Posts</h3>
+                                </div>
+                            </div>
+                        </Modal>
                     </div>
                     <div>
                         <ExploreOutlinedIcon className="icon" />
@@ -140,6 +209,7 @@ function Header() {
                     </div>
                 </nav>
             </div>
+
         </header>
     )
 }

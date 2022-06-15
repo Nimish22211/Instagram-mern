@@ -91,10 +91,7 @@ function Profile() {
     }, [showFollowBtn])
 
     useEffect(() => {
-        //! event listners arent removed when new user is loaded
-        //remove all the event listeners added to follow_unfollow when new user is loaded
         if (follow_unfollow) {
-            // console.log('event remove')
             follow_unfollow.removeEventListener('mouseover', changeToUnfollow)
             follow_unfollow.removeEventListener('mouseout', changeToFollowing)
         }

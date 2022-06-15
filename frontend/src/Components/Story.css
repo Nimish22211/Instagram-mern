@@ -17,6 +17,11 @@
     cursor: pointer;
 }
 
+.section_story>figure>.story_avatar {
+    width: 56px;
+    height: 56px;
+}
+
 .section_story>figure>img {
     border-radius: 100%;
     height: 56px;

@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Story.css'
 import AddIcon from '@mui/icons-material/Add';
 import { useSelector } from 'react-redux';
 import { selectAuthUser } from '../Redux/AuthUser'
+import { Avatar } from '@mui/material';
 
 function Story() {
     const currUser = useSelector(selectAuthUser)
-    const [followers, setFollowers] = useState(currUser.followers)
-    console.log(currUser)
+    const [following, setFollowing] = useState([])
+    useEffect(() => {
+        setFollowing(currUser.following)
+    }, [currUser, following])
+    // console.log(currUser)
     return (
         <section className="section_story">
             {/* <figure>
@@ -30,15 +34,28 @@ function Story() {
                 <img src="/Images/mclaren.jpg" alt="mclaren" />
                 <figcaption>mclaren</figcaption>
             </figure> */}
-            <figure>
-                <div className="add_icon_circle">
-                    <AddIcon style={{ textAlign: 'center', width: '56px' }} />
-                    <figcaption style={{ textAlign: 'center', width: '56px', fontSize: '14px' }}>Add</figcaption>
+            {following.length < 0 ? <>
+                <figure>
+                    <div className="add_icon_circle">
+                        <AddIcon style={{ textAlign: 'center', width: '56px' }} />
+                        <figcaption style={{ textAlign: 'center', width: '56px', fontSize: '14px' }}>Add</figcaption>
+                    </div>
+                </figure>
+                <div className="follow_for_story">
+                    Follow someone to view their story
                 </div>
-            </figure>
-            <div className="follow_for_story">
-                Follow someone to view their story
-            </div>
+            </>
+                : <>
+                    {currUser.following && currUser.following.map(user => {
+                        return (
+                            <figure key={user.userName}>
+                                <Avatar src="/" alt={user.userName} className="story_avatar" />
+                                <figcaption>{user.userName}</figcaption>
+                            </figure>
+                        )
+                    })}
+                </>}
+
         </section>
     )
 }
