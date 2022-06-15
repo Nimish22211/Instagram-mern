@@ -126,3 +126,31 @@ nav a {
     height: 28px;
     font-size: 24px;
 }
+
+.post_modal_body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    gap: 50px
+}
+
+.post_modal_body>button {
+    background-color: rgb(66, 133, 244);
+    border: none;
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.post_modal_body>button:hover {
+    background-color: rgb(128, 170, 238);
+}
+
+.post_preview {
+    width: 90%;
+    /* height: 90%; */
+}
